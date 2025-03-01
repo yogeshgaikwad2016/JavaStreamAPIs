@@ -1,7 +1,9 @@
 package com.interview.streams;
 
 import javax.swing.text.html.Option;
+import javax.swing.text.html.parser.Entity;
 import java.util.*;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -74,6 +76,9 @@ public class StreamsTest {
         //Q. Find the sum of two largest odd numbers from list.
         int sum = numbers.stream().filter(n -> n % 2 != 0).sorted(Collections.reverseOrder()).limit(2).mapToInt(Integer::intValue).sum();
         System.out.println("Sum of two largest odd numbers: " + sum);
+
+        //Q. How do you find most repeated element from array and it's count
+        System.out.println("Repeated element with count: " + words.stream().collect(Collectors.groupingBy(Function.identity(), Collectors.counting())).entrySet().stream().max(Map.Entry.comparingByValue()));
     }
 
     static boolean isPrime ( int number){
