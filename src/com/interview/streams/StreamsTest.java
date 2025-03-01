@@ -79,9 +79,40 @@ public class StreamsTest {
 
         //Q. How do you find most repeated element from array and it's count
         System.out.println("Repeated element with count: " + words.stream().collect(Collectors.groupingBy(Function.identity(), Collectors.counting())).entrySet().stream().max(Map.Entry.comparingByValue()));
+
+        Map<String, Double> grades1 = new HashMap<>();
+        grades1.put("Math", 90.5);
+        grades1.put("Science", 85.0);
+        grades1.put("History", 78.5);
+
+        Map<String, Double> grades2 = new HashMap<>();
+        grades2.put("Math", 88.0);
+        grades2.put("Science", 92.5);
+        grades2.put("History", 81.0);
+
+        Map<String, Double> grades3 = new HashMap<>();
+        grades3.put("Math", 95.0);
+        grades3.put("Science", 89.5);
+        grades3.put("History", 76.0);
+
+        // Create student objects
+        Student student1 = new Student("Alice", grades1);
+        Student student2 = new Student("Bob", grades2);
+        Student student3 = new Student("Charlie", grades3);
+
+        List<Student> students = new ArrayList<>();
+        students.add(student1);
+        students.add(student2);
+        students.add(student3);
+
+        //Q. Get average marks map for each student.
+        System.out.println("AVG marks: " + students.stream().collect(Collectors.toMap(Student::getName, student -> student.getStudentGrade().values().stream().collect(Collectors.averagingDouble(Double::doubleValue)))));
+
+        //Q. Student who scored the highest show - Name and in which subject.
+        System.out.println("Student scored highest: " + students.stream().collect(Collectors.toMap(Student::getName, s -> s.getStudentGrade().values().stream().max(Double::compareTo).orElse(0.0))));
     }
 
-    static boolean isPrime ( int number){
+    static boolean isPrime(int number) {
         if (number <= 1) {
             return false;
         }
@@ -115,5 +146,25 @@ class Transaction {
     Transaction(String date, int amount) {
         this.amount = amount;
         this.date = date;
+    }
+}
+
+class Student {
+    private String name;
+    private Map<String, Double> studentGrade; // Map of subject and grade
+
+    // Constructor
+    public Student(String name, Map<String, Double> studentGrade) {
+        this.name = name;
+        this.studentGrade = studentGrade;
+    }
+
+    // Getters
+    public String getName() {
+        return name;
+    }
+
+    public Map<String, Double> getStudentGrade() {
+        return studentGrade;
     }
 }
