@@ -67,11 +67,13 @@ public class StreamsTest {
         System.out.println("Word frequency: " + wordFrequency);
 
         //Q. Implement a method to partition a list into two groups based on a predicate using Java streams:
-        List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
-        Map<Boolean, List<Integer>> partitioned = numbers.stream().collect(Collectors.partitioningBy(num -> num % 2 == 0));
+        List<Integer> numbers1 = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
+        Map<Boolean, List<Integer>> partitioned = numbers1.stream().collect(Collectors.partitioningBy(num -> num % 2 == 0));
         System.out.println("Even: " + partitioned.get(true) + " " + "Odd:" + partitioned.get(false));
 
-
+        //Q. Find the sum of two largest odd numbers from list.
+        int sum = numbers.stream().filter(n -> n % 2 != 0).sorted(Collections.reverseOrder()).limit(2).mapToInt(Integer::intValue).sum();
+        System.out.println("Sum of two largest odd numbers: " + sum);
     }
 
     static boolean isPrime ( int number){
