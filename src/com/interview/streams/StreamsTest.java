@@ -110,6 +110,39 @@ public class StreamsTest {
 
         //Q. Student who scored the highest show - Name and in which subject.
         System.out.println("Student scored highest: " + students.stream().collect(Collectors.toMap(Student::getName, s -> s.getStudentGrade().values().stream().max(Double::compareTo).orElse(0.0))));
+
+        List<Product> electronicsProducts = new ArrayList<>();
+        electronicsProducts.add(new Product("Laptop", "Electronics", 999.99));
+        electronicsProducts.add(new Product("Smartphone", "Electronics", 499.99));
+        electronicsProducts.add(new Product("Headphones", "Electronics", 199.99));
+
+        List<Product> clothingProducts = new ArrayList<>();
+        clothingProducts.add(new Product("Shirt", "Clothing", 29.99));
+        clothingProducts.add(new Product("Jeans", "Clothing", 49.99));
+        clothingProducts.add(new Product("Shoes", "Clothing", 79.99));
+
+        List<Product> groceryProducts = new ArrayList<>();
+        groceryProducts.add(new Product("Apples", "Groceries", 4.99));
+        groceryProducts.add(new Product("Bread", "Groceries", 2.99));
+        groceryProducts.add(new Product("Milk", "Groceries", 3.49));
+
+        // Create store objects
+        Store electronicsStore = new Store("Electronics Store", electronicsProducts);
+        Store clothingStore = new Store("Clothing Store", clothingProducts);
+        Store groceryStore = new Store("Grocery Store", groceryProducts);
+
+        // Create a list of stores
+        List<Store> stores = new ArrayList<>();
+        stores.add(electronicsStore);
+        stores.add(clothingStore);
+        stores.add(groceryStore);
+
+        //Q. Find out store names which has price sum more than 50.
+        //Map<String, List<String>> data = stores.stream().collect(Collectors.toMap(Store::getName, store -> store.getProducts().stream().filter(p -> p.getPrice() > 50).map(Product::getName).toList()));
+        System.out.println("Store with product price > 50: " + stores.stream().filter(store -> store.getProducts().stream().anyMatch(p -> p.getPrice() > 50)).map(Store::getName).toList());
+
+        //Q. Find out each store category with sum of all the prices.
+        System.out.println("Store category with prices sum: " + stores.stream().flatMap(store -> store.getProducts().stream()).collect(Collectors.groupingBy(Product::getCategory, Collectors.summingDouble(Product::getPrice))));
     }
 
     static boolean isPrime(int number) {
@@ -167,4 +200,52 @@ class Student {
     public Map<String, Double> getStudentGrade() {
         return studentGrade;
     }
+}
+
+class Product {
+    private String name;
+    private String category;
+    private double price;
+
+    // Constructor
+    public Product(String name, String category, double price) {
+        this.name = name;
+        this.category = category;
+        this.price = price;
+    }
+
+    // Getters
+    public String getName() {
+        return name;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+}
+
+// Store class
+class Store {
+    private String name;
+    private List<Product> products;
+
+    // Constructor
+    public Store(String name, List<Product> products) {
+        this.name = name;
+        this.products = products;
+    }
+
+    // Getters
+    public String getName() {
+        return name;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
 }
