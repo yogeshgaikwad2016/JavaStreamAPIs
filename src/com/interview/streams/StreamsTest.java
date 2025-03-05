@@ -9,10 +9,10 @@ public class StreamsTest {
     static List<String> strings = Arrays
             .asList("apple", "banana", "cherry", "date", "grapefruit");
 
-    static List<Person> persons = Arrays.asList(
-            new Person("Alice", 25),
-            new Person("Bob", 30),
-            new Person("Charlie", 35)
+    static List<Person1> persons = Arrays.asList(
+            new Person1("Alice", 25),
+            new Person1("Bob", 30),
+            new Person1("Charlie", 35)
     );
 
     static List<Integer> numbers = Arrays.asList(2, 4, 6, 8, 10, 11, 12, 13, 14, 15);
@@ -38,7 +38,7 @@ public class StreamsTest {
         System.out.println("Longest string: " + (longStr.orElse("No longest string present")));
 
         //Q. Calculate the average age of a list of Person objects using Java streams:
-        System.out.println("Average age: " + persons.stream().mapToInt(Person::getAge).average().orElse(0));
+        System.out.println("Average age: " + persons.stream().mapToInt(Person1::getAge).average().orElse(0));
 
         //Q. Check if a list of integers contains a prime number using Java streams:
         System.out.println("Is Prime: " + numbers.stream().anyMatch(StreamsTest::isPrime));
@@ -155,7 +155,7 @@ public class StreamsTest {
     }
 }
 
-class Person {
+class Person1 {
     int age;
     String name;
 
@@ -163,7 +163,7 @@ class Person {
         return this.age;
     }
 
-    Person(String name, int age) {
+    Person1(String name, int age) {
         this.name = name;
         this.age = age;
     }
