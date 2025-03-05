@@ -25,12 +25,12 @@ public class StreamsTest {
 
     static List<Integer> numbersWithDuplicates = Arrays.asList(1, 2, 3, 2, 4, 1, 5, 6, 5);
 
-    static List<Transaction> transactions = Arrays.asList(
-            new Transaction("2022-01-01", 100),
-            new Transaction("2022-01-01", 200),
-            new Transaction("2022-01-02", 300),
-            new Transaction("2022-01-02", 400),
-            new Transaction("2022-01-03", 500));
+    static List<Transaction1> transactions = Arrays.asList(
+            new Transaction1("2022-01-01", 100),
+            new Transaction1("2022-01-01", 200),
+            new Transaction1("2022-01-02", 300),
+            new Transaction1("2022-01-02", 400),
+            new Transaction1("2022-01-03", 500));
 
     public static void main(String[] args) {
         //Q. Find the longest string in a list of strings using Java streams:
@@ -169,11 +169,11 @@ class Person1 {
     }
 }
 
-class Transaction {
+class Transaction1 {
     String date;
     int amount;
 
-    Transaction(String date, int amount) {
+    Transaction1(String date, int amount) {
         this.amount = amount;
         this.date = date;
     }
