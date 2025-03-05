@@ -2,6 +2,9 @@ package com.interview.streams;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toSet;
 
 public class LibraryToughStreamAPIs {
 
@@ -26,11 +29,22 @@ public class LibraryToughStreamAPIs {
                                 new Member("Grace", 19, "Regular"),
                                 new Member("Hank", 50, "Premium")
                         ))
+                )),
+                new Library("Central Library", Arrays.asList(
+                        new Book("Book A", "Author X", 2005, Arrays.asList(
+                                new Member("Alice", 25, "Regular"),
+                                new Member("Bob", 30, "Premium")
+                        )),
+                        new Book("Book B", "Author Y", 2010, Arrays.asList(
+                                new Member("Alice", 25, "Regular"), // Alice borrowed another book
+                                new Member("Charlie", 22, "Regular")
+                        ))
                 ))
         );
 
         System.out.println("Question 1: Find the average age of members who have borrowed books published after the year 2000: " +
-                libraries.stream());
+                libraries.stream().flatMap(l -> l.getBooks().stream().filter(b -> b.getYearPublished() > 2000).flatMap(b -> b.getBorrowers().stream()))
+                        .collect(Collectors.collectingAndThen(toSet(), m -> m.stream().collect(Collectors.averagingInt(Member::getAge)))));
 
         System.out.println("Question 2: Group books by the number of members who have borrowed them: " +
                 libraries.stream());
