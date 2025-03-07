@@ -140,6 +140,32 @@ public class StreamsTest {
 
         //Q. Find out each store category with sum of all the prices.
         System.out.println("Store category with prices sum: " + stores.stream().flatMap(store -> store.getProducts().stream()).collect(Collectors.groupingBy(Product::getCategory, Collectors.summingDouble(Product::getPrice))));
+
+        String s = "asdfaghjklkjhgfdsa";
+        //Find the first repeating character in the given string using streams and lambda expression. output - a
+        System.out.println("First repeating character: " +
+                s.chars().mapToObj(ch -> Character.toLowerCase((char)ch)).collect(
+                        Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                        .entrySet().stream().filter(d -> d.getValue() > 1).findFirst().map(Map.Entry::getKey).orElse(null));
+
+        //Given an array of strings, group the anagrams together Input:
+        String[] strs = new String[]{"eat","tea","tan","ate","nat","bat"}; //Output: [["bat"],["nat","tan"],["ate","eat","tea"]]
+        System.out.println("Group anagrams from array of strings: " +
+                Arrays.stream(strs).collect(Collectors.groupingBy(word -> {
+                    char[] ch = word.toCharArray();
+                    Arrays.sort(ch);
+                    return new String(ch);
+                })).values().stream().toList());
+
+        //Given a string array of sentences use stream api to return distinct list of words that start with #
+        String[] sentences = {
+                "Here is a #sample sentence.",
+                "This is another #example of a sentence.",
+                "#Java streams are powerful.",
+                "Find words #example that start with #."
+        };
+        System.out.println("Distinct list of words starts with #: " + Arrays.stream(sentences).flatMap(s1 -> Arrays.stream(s1.split(" ")).filter(w1 -> w1.startsWith("#"))).distinct().toList());
+
     }
 
     static boolean isPrime(int number) {

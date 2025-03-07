@@ -47,7 +47,9 @@ public class LibraryToughStreamAPIs {
                         .collect(Collectors.collectingAndThen(toSet(), m -> m.stream().collect(Collectors.averagingInt(Member::getAge)))));
 
         System.out.println("Question 2: Group books by the number of members who have borrowed them: " +
-                libraries.stream());
+                libraries.stream().flatMap(l -> l.getBooks().stream()).collect(Collectors.groupingBy(Book::getTitle, Collectors.flatMapping(
+                        b -> b.getBorrowers().stream(), Collectors.counting()
+                ))));
 
         System.out.println("Question 3: Find the book with the highest number of borrowers: " +
                 libraries.stream());
